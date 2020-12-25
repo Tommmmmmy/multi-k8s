@@ -1,3 +1,6 @@
+# A file that tells kubenetes how much space Postgres needs
+# This is to separate the database storage for Postgres
+# from Postgres pods to prevent data loss in case pods fail
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:

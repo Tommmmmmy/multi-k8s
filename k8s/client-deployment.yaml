@@ -1,3 +1,7 @@
+# Deploy client pods. Line 10 and 14 have to be identical.
+# Line 10 tells this deployment what pods to manage
+# Line 14 tells what labels should be created for these newly created client pods
+# Lines after 14 basically servers the same purpose as a pod config file
 apiVersion: apps/v1
 kind: Deployment
 metadata:

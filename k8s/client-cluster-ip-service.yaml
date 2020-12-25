@@ -1,3 +1,6 @@
+# Manages the access to client pods matching by selector "component: web"
+# Other pods can access client pods via port 3000 which redirects to port 3000 inside client pods.
+# These two ports don't have to be the same
 apiVersion: v1
 kind: Service
 metadata:

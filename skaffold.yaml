@@ -1,0 +1,44 @@
+# A file that enables skaffold to monitor local changes
+# and deploy them to local kubernetes cluster automatically
+# Warning: the images listed here have to match those in the deployment config file
+# of client, server and worker
+# Run command "skaffold dev" will start all servers and pods under k8s and monitor any changes
+apiVersion: skaffold/v2alpha3
+kind: Config
+# Will delete all servers and pods under k8s when exiting from "skaffold dev"
+deploy:
+  kubectl:
+    manifests:
+      - ./k8s/*
+build:
+  local:
+    push: false
+  artifacts:
+    - image: stephengrider/multi-client
+      context: client
+      docker:
+        dockerfile: Dockerfile.dev
+      sync:
+        manual:
+          - src: 'src/**/*.js'
+            dest: .
+          - src: 'src/**/*.css'
+            dest: .
+          - src: 'src/**/*.html'
+            dest: .
+    - image: stephengrider/multi-worker
+      context: worker
+      docker:
+        dockerfile: Dockerfile.dev
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: cygnetops/multi-server-pgfix-5-11
+      context: server
+      docker:
+        dockerfile: Dockerfile.dev
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .

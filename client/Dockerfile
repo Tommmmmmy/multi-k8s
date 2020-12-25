@@ -1,3 +1,5 @@
+#A dockerfile to be used in development
+#docker build .
 FROM node:alpine as builder
 WORKDIR '/app'
 COPY ./package.json ./

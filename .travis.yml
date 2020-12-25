@@ -1,3 +1,4 @@
+#A travis config that automate the test, build and deployment to google cloud
 sudo: required
 services:
   - docker

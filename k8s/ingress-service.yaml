@@ -1,3 +1,5 @@
+# This governs external access to kubenetes
+# By default nginx ingress controller listens at port 80 and 443
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
@@ -5,6 +7,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: 'nginx'
     nginx.ingress.kubernetes.io/use-regex: 'true'
+    # Remove /api from the coming request for server
     nginx.ingress.kubernetes.io/rewrite-target: /$1
     # UPDATE THIS LINE ABOVE
 spec:
@@ -14,6 +17,7 @@ spec:
           - path: /?(.*)
             # UPDATE THIS LINE ABOVE
             backend:
+              # This needs to match the name of cluster ip of client
               serviceName: client-cluster-ip-service
               servicePort: 3000
           - path: /api/?(.*)
